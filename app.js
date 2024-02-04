@@ -2,10 +2,16 @@
 const rubricResponse = await fetch('data/rubric.json');
 const datasetResponse = await fetch('data/dataset.json');
 
-// Parse JSON responses
-const rubric = await rubricResponse.json();
-const dataset = await datasetResponse.json();
+try {
+    // Parse JSON responses
+    const rubric = await rubricResponse.json();
+    const dataset = await datasetResponse.json();
 
+    console.log('Rubric:', rubric);
+    console.log('Dataset:', dataset);
+} catch (error) {
+    console.error('Error fetching or parsing data:', error);
+}
 
 // Rubric mappings
 const courageMapping = {
