@@ -72,9 +72,24 @@ function getRubricMapping(virtue) {
     return {};
 }
 
-// Example usage
-const selectedVirtues = ['Courage', 'Wisdom', 'Justice', 'Temperance'];
-const scores = calculateScores(sampleJournalEntry, selectedVirtues, sampleDatasetRow);
+// Function to be called when the Submit button is clicked
+function submitJournal() {
+    // Get user input
+    const journalEntry = document.getElementById('journalEntry').value;
+    const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
 
-console.log('Holistic Score:', scores.holistic);
-console.log('Individual Virtue Scores:', scores);
+    // Calculate scores
+    const scores = calculateScores(journalEntry, selectedVirtues, sampleDatasetRow);
+
+    // Display scores
+    displayScores(scores);
+}
+
+// Function to display scores
+function displayScores(scores) {
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    scoreDisplay.innerHTML = '<h2>Scores:</h2>';
+    for (const virtue in scores) {
+        scoreDisplay.innerHTML += `<p>${virtue}: ${scores[virtue]}</p>`;
+    }
+}
