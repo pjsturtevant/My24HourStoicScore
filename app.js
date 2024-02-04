@@ -1,6 +1,7 @@
+
 // Fetch rubric and dataset
-const rubricResponse = await fetch('data/rubric.json');
-const datasetResponse = await fetch('data/dataset.json');
+const rubricResponse = await fetch('https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO_NAME/main/path/to/rubric.json');
+const datasetResponse = await fetch('https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO_NAME/main/path/to/dataset.json');
 
 try {
     // Parse JSON responses
@@ -9,6 +10,20 @@ try {
 
     console.log('Rubric:', rubric);
     console.log('Dataset:', dataset);
+
+    // Function to be called when the Submit button is clicked
+    function submitJournal() {
+        // Get user input
+        const journalEntry = document.getElementById('journalEntry').value;
+        const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
+
+        // Calculate scores
+        const scores = calculateScores(journalEntry, selectedVirtues, dataset);
+
+        // Display scores
+        displayScores(scores);
+    }
+
 } catch (error) {
     console.error('Error fetching or parsing data:', error);
 }
