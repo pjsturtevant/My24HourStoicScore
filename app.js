@@ -34,8 +34,13 @@ function calculateScores(entry, virtues, datasetRow) {
     virtues.forEach(virtue => {
         const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
         const rubricMapping = getRubricMapping(virtue);
+        
+        console.log(`Virtue: ${virtue}, Description: ${scoreDescription}, Mapping:`, rubricMapping); // Add this line
+        
         scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
     });
+
+    console.log('Final Scores:', scores); // Add this line
 
     return scores;
 }
