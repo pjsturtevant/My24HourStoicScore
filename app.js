@@ -47,6 +47,11 @@ function calculateScores(entry, virtues, datasetRow) {
 
 // Map score based on rubric description
 function mapScore(description, rubricMapping, entry, datasetRow) {
+    console.log('Mapping:', rubricMapping); // Add this line
+    console.log('Description:', description); // Add this line
+    console.log('Entry:', entry); // Add this line
+    console.log('Dataset Row:', datasetRow); // Add this line
+
     // Custom logic based on rubric criteria, content of the entry, and dataset information
     // You can add more sophisticated logic here
 
