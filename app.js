@@ -58,18 +58,20 @@ function mapScore(description, rubricMapping, entry, datasetRow) {
 
 // Retrieve rubric mapping based on virtue
 function getRubricMapping(virtue) {
+    let mapping = {};
     if (virtue === 'Courage') {
-        return courageMapping;
+        mapping = courageMapping;
     } else if (virtue === 'Wisdom') {
-        return wisdomMapping;
+        mapping = wisdomMapping;
     } else if (virtue === 'Justice') {
-        return justiceMapping;
+        mapping = justiceMapping;
     } else if (virtue === 'Temperance') {
-        return temperanceMapping;
+        mapping = temperanceMapping;
     }
 
-    // Default to an empty mapping
-    return {};
+    console.log(`Virtue: ${virtue}, Mapping:`, mapping); // Add this line
+
+    return mapping;
 }
 
 // Function to be called when the Submit button is clicked
