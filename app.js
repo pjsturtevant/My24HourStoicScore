@@ -52,15 +52,16 @@ function mapScore(description, rubricMapping, entry, datasetRow) {
     console.log('Entry:', entry); // Add this line
     console.log('Dataset Row:', datasetRow); // Add this line
 
-    // Custom logic based on rubric criteria, content of the entry, and dataset information
-    // You can add more sophisticated logic here
-
     // Example: Adjust the score based on dataset information
     if (description === 'Exemplary' && entry.includes('overcomes challenges')) {
+        console.log('Condition 1 met'); // Add this line
         return rubricMapping[description] + datasetRow.holistic_score;
     } else if (description === 'Proficient' && entry.includes('occasionally struggles')) {
+        console.log('Condition 2 met'); // Add this line
         return rubricMapping[description] + datasetRow.holistic_score;
     }
+
+    console.log('No specific condition met'); // Add this line
 
     // If no specific condition is met, use the mapping
     return rubricMapping[description];
