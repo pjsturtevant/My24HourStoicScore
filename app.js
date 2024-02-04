@@ -1,3 +1,12 @@
+// Fetch rubric and dataset
+const rubricResponse = await fetch('data/rubric.json');
+const datasetResponse = await fetch('data/dataset.json');
+
+// Parse JSON responses
+const rubric = await rubricResponse.json();
+const dataset = await datasetResponse.json();
+
+
 // Rubric mappings
 const courageMapping = {
     'Exemplary': 5,
