@@ -1,9 +1,13 @@
 // Fetch rubric and dataset
 async function fetchData() {
-    const rubricResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/rubric.json');
-    const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
-
     try {
+        const rubricResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/rubric.json');
+        const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
+
+        if (!rubricResponse.ok || !datasetResponse.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
         // Parse JSON responses
         const rubric = await rubricResponse.json();
         const dataset = await datasetResponse.json();
@@ -116,4 +120,3 @@ async function fetchData() {
 
 // Call the function to fetch data when the script is loaded
 fetchData();
-
