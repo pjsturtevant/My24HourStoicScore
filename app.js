@@ -1,7 +1,7 @@
 
 // Fetch rubric and dataset
-const rubricResponse = await fetch('https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO_NAME/main/path/to/rubric.json');
-const datasetResponse = await fetch('https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO_NAME/main/path/to/dataset.json');
+const rubricResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/rubric.json');
+const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
 
 try {
     // Parse JSON responses
