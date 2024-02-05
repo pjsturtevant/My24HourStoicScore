@@ -11,9 +11,6 @@ async function submitJournal() {
     displayScores(scores);
 }
 
-// Attach the event handler after defining it
-document.getElementById('submitBtn').onclick = submitJournal;
-
 // Fetch rubric and dataset
 async function fetchData() {
     try {
@@ -54,64 +51,20 @@ async function fetchData() {
                 const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
                 const rubricMapping = getRubricMapping(virtue);
 
-                console.log(`Virtue: ${virtue}, Description: ${scoreDescription}, Mapping:`, rubricMapping); // Add this line
+                console.log(`Virtue: ${virtue}, Description: ${scoreDescription}, Mapping:`, rubricMapping);
 
                 scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
             });
 
-            console.log('Final Scores:', scores); // Add this line
+            console.log('Final Scores:', scores);
 
             return scores;
         }
 
-        // Map score based on rubric description
-        function mapScore(description, rubricMapping, entry, datasetRow) {
-            console.log('Mapping:', rubricMapping); // Add this line
-            console.log('Description:', description); // Add this line
-            console.log('Entry:', entry); // Add this line
-            console.log('Dataset Row:', datasetRow); // Add this line
+        // Rest of your code...
 
-            // Example: Adjust the score based on dataset information
-            if (description === 'Exemplary' && entry.includes('overcomes challenges')) {
-                console.log('Condition 1 met'); // Add this line
-                return rubricMapping[description] + datasetRow.holistic_score;
-            } else if (description === 'Proficient' && entry.includes('occasionally struggles')) {
-                console.log('Condition 2 met'); // Add this line
-                return rubricMapping[description] + datasetRow.holistic_score;
-            }
-
-            console.log('No specific condition met'); // Add this line
-
-            // If no specific condition is met, use the mapping
-            return rubricMapping[description];
-        }
-
-        // Retrieve rubric mapping based on virtue
-        function getRubricMapping(virtue) {
-            let mapping = {};
-            if (virtue === 'Courage') {
-                mapping = rubric.courageMapping;
-            } else if (virtue === 'Wisdom') {
-                mapping = rubric.wisdomMapping;
-            } else if (virtue === 'Justice') {
-                mapping = rubric.justiceMapping;
-            } else if (virtue === 'Temperance') {
-                mapping = rubric.temperanceMapping;
-            }
-
-            console.log(`Virtue: ${virtue}, Mapping:`, mapping); // Add this line
-
-            return mapping;
-        }
-
-        // Function to display scores
-        function displayScores(scores) {
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            scoreDisplay.innerHTML = '<h2>Scores:</h2>';
-            for (const virtue in scores) {
-                scoreDisplay.innerHTML += `<p>${virtue}: ${scores[virtue]}</p>`;
-            }
-        }
+        // Attach the event handler after defining it
+        document.getElementById('submitBtn').onclick = submitJournal;
 
     } catch (error) {
         console.error('Error fetching or parsing data:', error);
