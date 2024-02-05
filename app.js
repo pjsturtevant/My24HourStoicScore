@@ -1,3 +1,19 @@
+// Define submitJournal function first
+async function submitJournal() {
+    // Get user input
+    const journalEntry = document.getElementById('journalEntry').value;
+    const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
+
+    // Calculate scores
+    const scores = calculateScores(journalEntry, selectedVirtues, sampleDatasetRow);
+
+    // Display scores
+    displayScores(scores);
+}
+
+// Attach the event handler after defining it
+document.getElementById('submitBtn').onclick = submitJournal;
+
 // Fetch rubric and dataset
 async function fetchData() {
     try {
@@ -88,19 +104,6 @@ async function fetchData() {
             return mapping;
         }
 
-        // Function to be called when the Submit button is clicked
-        async function submitJournal() {
-            // Get user input
-            const journalEntry = document.getElementById('journalEntry').value;
-            const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
-
-            // Calculate scores
-            const scores = calculateScores(journalEntry, selectedVirtues, sampleDatasetRow);
-
-            // Display scores
-            displayScores(scores);
-        }
-
         // Function to display scores
         function displayScores(scores) {
             const scoreDisplay = document.getElementById('scoreDisplay');
@@ -109,9 +112,6 @@ async function fetchData() {
                 scoreDisplay.innerHTML += `<p>${virtue}: ${scores[virtue]}</p>`;
             }
         }
-
-        // Attach the event handler after defining it
-        document.getElementById('submitBtn').onclick = submitJournal;
 
     } catch (error) {
         console.error('Error fetching or parsing data:', error);
