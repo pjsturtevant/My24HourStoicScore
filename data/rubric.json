@@ -1,53 +1,34 @@
-The 4 Cardinal Virtues Rubric:
 
-Virtue
-5 Points (Exemplary)
-4 Points (Proficient)
-3 Points (Developing)
-2 Points (Limited)
-1 Point (Minimal)
-
-Courage
-5 Points (Exemplary): Faces challenges head-on, overcomes fear with action, stands for principles even when difficult.
-4 Points (Proficient): Generally confrontational, occasionally struggles with specific fears, defends principles most of the time.
-3 Points (Developing):
-Avoids difficult situations, succumbs to fear, compromises principles for comfort.
-2 Points (Limited):
-Lacks initiative, paralyzed by fear, readily abandons convictions.
-1 Point (Minimal):
-Avoids conflict at all costs, readily conforms to external pressures.
-
-Wisdom
-5 Points (Exemplary): Recognizes impermanence with acceptance, discerns control from influence, prioritizes needs over wants.
-4 Points (Proficient):
-Mostly accepting of life's changes, occasionally struggles with control or desires.
-3 Points (Developing):
-Confuses internal and external control, prioritizes wants over needs frequently.
-2 Points (Limited):
-Resists acceptance, blames external factors, driven by impulsive desires.
-1 Point (Minimal):
-Clinging to control, unable to distinguish needs, consumes impulsively.
-
-Justice
-5 Points (Exemplary): Treats everyone fairly, speaks out against injustice even when challenged, you promote equality.
-4 Points (Proficient):
-Generally upholds the Golden Rule, occasionally avoids injustice or compromises fairness.
-3 Points (Developing):
-Favors certain individuals, remains silent about injustice, prioritizes personal gain over equity.
-2 Points (Limited):
-Actively participates in injustice, lacks empathy or understanding of fairness.
-1 Point (Minimal):
-Exploits others, disregards needs of others, engages in discriminatory behavior.
-
-Temperance
-5 Points (Exemplary): Maintains balance in abundance and scarcity, controls desires, speaks with intention and restraint.
-4 Points (Proficient):
-Mostly avoids excess, occasionally indulges in moderation, mindful of words.
-3 Points (Developing):
-Struggles with balance, prone to excesses, speaks impulsively or negatively.
-2 Points (Limited):
-Frequently succumbs to desires, lacks self-control, engages in gossip or hurtful words.
-1 Point (Minimal):
-Consumed by excess, lacks discipline, speaks carelessly and impulsively.
-
+{
+  "rubric": {
+    "courage": {
+      "5": "Faces challenges head-on, overcomes fear with action, stands for principles even when difficult.",
+      "4": "Generally confrontational, occasionally struggles with specific fears, defends principles most of the time.",
+      "3": "Avoids difficult situations, succumbs to fear, compromises principles for comfort.",
+      "2": "Lacks initiative, paralyzed by fear, readily abandons convictions.",
+      "1": "Avoids conflict at all costs, readily conforms to external pressures."
+    },
+    "wisdom": {
+      "5": "Recognizes impermanence with acceptance, discerns control from influence, prioritizes needs over wants.",
+      "4": "Mostly accepting of life's changes, occasionally struggles with control or desires.",
+      "3": "Confuses internal and external control, prioritizes wants over needs frequently.",
+      "2": "Resists acceptance, blames external factors, driven by impulsive desires.",
+      "1": "Clinging to control, unable to distinguish needs, consumes impulsively."
+    },
+    "justice": {
+      "5": "Treats everyone fairly, speaks out against injustice even when challenged, promotes equality.",
+      "4": "Generally upholds the Golden Rule, occasionally avoids injustice or compromises fairness.",
+      "3": "Favors certain individuals, remains silent about injustice, prioritizes personal gain over equity.",
+      "2": "Actively participates in injustice, lacks empathy or understanding of fairness.",
+      "1": "Exploits others, disregards needs of others, engages in discriminatory behavior."
+    },
+    "temperance": {
+      "5": "Maintains balance in abundance and scarcity, controls desires, speaks with intention and restraint.",
+      "4": "Mostly avoids excess, occasionally indulges in moderation, mindful of words.",
+      "3": "Struggles with balance, prone to excesses, speaks impulsively or negatively.",
+      "2": "Frequently succumbs to desires, lacks self-control, engages in gossip or hurtful words.",
+      "1": "Consumed by excess, lacks discipline, speaks carelessly and impulsively."
+    }
+  }
+}
 
