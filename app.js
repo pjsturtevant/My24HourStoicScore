@@ -1,56 +1,59 @@
-// Fetch rubric and dataset
-async function fetchData() {
-    try {
-        // Fetch rubric and dataset
-        const rubricResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/rubric.json');
-        const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
+// Function to calculate scores
+function calculateScores(entry, virtues, datasetRow) {
+    // Initialize scores
+    const scores = {
+        holistic: datasetRow.holistic_score,
+    };
 
-        // Parse JSON responses
-        const rubric = await rubricResponse.json();
-        const dataset = await datasetResponse.json();
+    // Iterate over virtues
+    virtues.forEach(virtue => {
+        const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
+        const rubricMapping = getRubricMapping(virtue);
 
-        // Log fetched data
-        console.log('Rubric:', rubric);
-        console.log('Dataset:', dataset);
+        scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
+    });
 
-        // Call function to process data
-        processData(rubric, dataset);
-    } catch (error) {
-        console.error('Error fetching or parsing data:', error);
+    return scores;
+}
+
+// Function to map score based on rubric description
+function mapScore(description, rubricMapping, entry, datasetRow) {
+    // Your code for mapping scores goes here...
+}
+
+// Function to retrieve rubric mapping based on virtue
+function getRubricMapping(virtue) {
+    // Your code for getting rubric mapping goes here...
+}
+
+// Function to display scores
+function displayScores(scores) {
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    scoreDisplay.innerHTML = '<h2>Scores:</h2>';
+    for (const virtue in scores) {
+        scoreDisplay.innerHTML += `<p>${virtue}: ${scores[virtue]}</p>`;
     }
 }
 
-// Function to process data
-function processData(rubric, dataset) {
-    // Function to calculate scores
-    function calculateScores(entry, virtues, dataset) {
-        // Initialize scores
-        const scores = {
-            holistic: 0,
-        };
+// Function to be called when the Submit button is clicked
+function submitJournal() {
+    // Get user input
+    const journalEntry = document.getElementById('journalEntry').value;
+    const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
 
-        // Iterate over dataset to find the appropriate row
-        dataset.forEach(datasetRow => {
-            // Check if journal entry matches
-            if (datasetRow.journal_entry === entry) {
-                // Calculate holistic score
-                scores.holistic = datasetRow.holistic_score;
+    // Sample dataset row (replace this with actual dataset)
+    const sampleDatasetRow = {
+        courage_score: 'Proficient',
+        wisdom_score: 'Developing',
+        justice_score: 'Limited',
+        temperance_score: 'Exemplary',
+        holistic_score: 3.5,
+        feedback: 'Some feedback here',
+    };
 
-                // Calculate scores for each virtue
-                virtues.forEach(virtue => {
-                    const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
-                    const rubricMapping = getRubricMapping(virtue);
+    // Calculate scores
+    const scores = calculateScores(journalEntry, selectedVirtues, sampleDatasetRow);
 
-                    scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
-                });
-            }
-        });
-
-        return scores;
-    }
-
-    // Your other functions (getRubricMapping, mapScore, displayScores) go here...
-
-    // Call fetchData function to start fetching and processing data
-    fetchData();
+    // Display scores
+    displayScores(scores);
 }

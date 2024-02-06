@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>My 24-Hour Stoic Score</title>
+    <title>Stoic Score Calculator</title>
 </head>
 <body>
-    <div class="container">
-        <h1>My 24-Hour Stoic Score</h1>
-        <label for="journalEntry">Enter Your Journal Entry:</label>
-        <textarea id="journalEntry" rows="4" cols="50"></textarea>
-
-        <label for="virtues">Select Virtue(s):</label>
-        <select id="virtues" multiple>
-            <option value="courage">Courage</option>
-            <option value="wisdom">Wisdom</option>
-            <option value="justice">Justice</option>
-            <option value="temperance">Temperance</option>
-        </select>
-
-        <button onclick="submitJournal()">Submit</button>
-
-        <div id="scoreDisplay"></div>
-    </div>
+    <h1>Stoic Score Calculator</h1>
+    <label for="journalEntry">Enter Your Journal Entry:</label>
+    <textarea id="journalEntry"></textarea>
+    <br>
+    <label for="virtues">Select Virtue(s):</label>
+    <select id="virtues" multiple>
+        <option value="Courage">Courage</option>
+        <option value="Wisdom">Wisdom</option>
+        <option value="Justice">Justice</option>
+        <option value="Temperance">Temperance</option>
+    </select>
+    <br>
+    <button onclick="submitJournal()">Submit</button>
+    <div id="scoreDisplay"></div>
 
     <script src="app.js"></script>
 </body>
