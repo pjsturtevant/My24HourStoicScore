@@ -1,73 +1,110 @@
-// Define submitJournal function first
-async function submitJournal() {
-    // Get user input
-    const journalEntry = document.getElementById('journalEntry').value;
-    const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
+// Fetch rubric and dataset
+const rubricResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/rubric.json');
+const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
 
-    try {
-        // Call ChatGPT to analyze the journal entry
-        const analysis = await analyzeWithChatGPT(journalEntry);
+try {
+    // Parse JSON responses
+    const rubric = await rubricResponse.json();
+    const dataset = await datasetResponse.json();
 
-        // Extract scores from ChatGPT's analysis
-        const scores = extractScores(analysis, selectedVirtues);
+    console.log('Rubric:', rubric);
+    console.log('Dataset:', dataset);
+
+    // Sample dataset row (replace this with actual dataset)
+    const sampleDatasetRow = {
+        courage_score: 'Proficient',
+        wisdom_score: 'Developing',
+        justice_score: 'Limited',
+        temperance_score: 'Exemplary',
+        holistic_score: 3.5,
+        feedback: 'Some feedback here',
+    };
+
+    // Sample user input
+    const sampleJournalEntry = "I had a positive day today. Overcame challenges and prioritized needs over wants.";
+
+    // Calculate scores
+    function calculateScores(entry, virtues, datasetRow) {
+        const scores = {
+            holistic: datasetRow.holistic_score,
+        };
+
+        virtues.forEach(virtue => {
+            const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
+            const rubricMapping = getRubricMapping(virtue);
+
+            console.log(`Virtue: ${virtue}, Description: ${scoreDescription}, Mapping:`, rubricMapping); // Add this line
+
+            scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
+        });
+
+        console.log('Final Scores:', scores); // Add this line
+
+        return scores;
+    }
+
+    // Map score based on rubric description
+    function mapScore(description, rubricMapping, entry, datasetRow) {
+        console.log('Mapping:', rubricMapping); // Add this line
+        console.log('Description:', description); // Add this line
+        console.log('Entry:', entry); // Add this line
+        console.log('Dataset Row:', datasetRow); // Add this line
+
+        // Example: Adjust the score based on dataset information
+        if (description === 'Exemplary' && entry.includes('overcomes challenges')) {
+            console.log('Condition 1 met'); // Add this line
+            return rubricMapping[description] + datasetRow.holistic_score;
+        } else if (description === 'Proficient' && entry.includes('occasionally struggles')) {
+            console.log('Condition 2 met'); // Add this line
+            return rubricMapping[description] + datasetRow.holistic_score;
+        }
+
+        console.log('No specific condition met'); // Add this line
+
+        // If no specific condition is met, use the mapping
+        return rubricMapping[description];
+    }
+
+    // Retrieve rubric mapping based on virtue
+    function getRubricMapping(virtue) {
+        let mapping = {};
+        if (virtue === 'Courage') {
+            mapping = rubric.courageMapping;
+        } else if (virtue === 'Wisdom') {
+            mapping = rubric.wisdomMapping;
+        } else if (virtue === 'Justice') {
+            mapping = rubric.justiceMapping;
+        } else if (virtue === 'Temperance') {
+            mapping = rubric.temperanceMapping;
+        }
+
+        console.log(`Virtue: ${virtue}, Mapping:`, mapping); // Add this line
+
+        return mapping;
+    }
+
+    // Function to be called when the Submit button is clicked
+    function submitJournal() {
+        // Get user input
+        const journalEntry = document.getElementById('journalEntry').value;
+        const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
+
+        // Calculate scores
+        const scores = calculateScores(journalEntry, selectedVirtues, sampleDatasetRow);
 
         // Display scores
         displayScores(scores);
-    } catch (error) {
-        console.error('Error analyzing journal entry with ChatGPT:', error);
-    }
-}
-
-// Function to analyze journal entry with ChatGPT
-async function analyzeWithChatGPT(journalEntry) {
-    // Call ChatGPT API to analyze the journal entry
-    // Replace 'YOUR_API_KEY' with your actual API key
-    const response = await fetch('https://api.openai.com/v1/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer YOUR_API_KEY'
-        },
-        body: JSON.stringify({
-            prompt: journalEntry,
-            max_tokens: 150,
-            temperature: 0.7,
-            stop: '\n'
-        })
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to analyze journal entry with ChatGPT');
     }
 
-    const data = await response.json();
-    return data.choices[0].text.trim();
+    // Function to display scores
+    function displayScores(scores) {
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        scoreDisplay.innerHTML = '<h2>Scores:</h2>';
+        for (const virtue in scores) {
+            scoreDisplay.innerHTML += `<p>${virtue}: ${scores[virtue]}</p>`;
+        }
+    }
+
+} catch (error) {
+    console.error('Error fetching or parsing data:', error);
 }
-
-// Function to extract scores from ChatGPT's analysis
-function extractScores(analysis, selectedVirtues) {
-    // Parse the analysis and extract scores for selected virtues
-    // You need to implement this based on the format of the analysis from ChatGPT
-    // For example, you might use regular expressions or other parsing techniques
-    // to extract relevant information from the analysis text
-
-    // Sample implementation:
-    const scores = {};
-    selectedVirtues.forEach(virtue => {
-        // Extract score for the virtue from the analysis
-        // Replace this with actual implementation
-        scores[virtue] = Math.random() * 5; // Placeholder random score
-    });
-
-    return scores;
-}
-
-// Function to display scores
-function displayScores(scores) {
-    // Display the scores in the UI
-    // You can update the UI elements with the calculated scores
-    console.log('Scores:', scores);
-}
-
-// Attach the event handler after defining it
-document.getElementById('submitBtn').onclick = submitJournal;
