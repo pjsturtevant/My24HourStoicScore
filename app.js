@@ -101,22 +101,60 @@ function processData(rubric, dataset) {
         const journalEntry = document.getElementById('journalEntry').value;
         const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
 
-        // Calculate scores
-        const scores = calculateScores(journalEntry, selectedVirtues, sampleDatasetRow);
+// Calculate scores
+function calculateScores(entry, virtues, dataset) {
+    // Initialize scores
+    const scores = {
+        holistic: 0,
+    };
 
-        // Display scores
-        displayScores(scores);
-    }
+    // Iterate over dataset to find the appropriate row
+    dataset.forEach(datasetRow => {
+        // Check if journal entry matches
+        if (datasetRow.journal_entry === entry) {
+            // Calculate holistic score
+            scores.holistic = datasetRow.holistic_score;
 
-    // Function to display scores
-    function displayScores(scores) {
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        scoreDisplay.innerHTML = '<h2>Scores:</h2>';
-        for (const virtue in scores) {
-            scoreDisplay.innerHTML += `<p>${virtue}: ${scores[virtue]}</p>`;
+            // Calculate scores for each virtue
+            virtues.forEach(virtue => {
+                const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
+                const rubricMapping = getRubricMapping(virtue);
+
+                scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
+            });
         }
-    }
+    });
+
+    return scores;
 }
 
-// Call fetchData function to start fetching and processing data
-fetchData();
+
+
+// Calculate scores
+function calculateScores(entry, virtues, dataset) {
+    // Initialize scores
+    const scores = {
+        holistic: 0,
+    };
+
+    // Iterate over dataset to find the appropriate row
+    dataset.forEach(datasetRow => {
+        // Check if journal entry matches
+        if (datasetRow.journal_entry === entry) {
+            // Calculate holistic score
+            scores.holistic = datasetRow.holistic_score;
+
+            // Calculate scores for each virtue
+            virtues.forEach(virtue => {
+                const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
+                const rubricMapping = getRubricMapping(virtue);
+
+                scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
+            });
+        }
+    });
+
+    return scores;
+}
+
+  
