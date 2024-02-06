@@ -1,15 +1,27 @@
-// Fetch rubric and dataset
-const rubricResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/rubric.json');
-const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
+// Function to fetch rubric and dataset
+async function fetchData() {
+    try {
+        // Fetch rubric and dataset
+        const rubricResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/rubric.json');
+        const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
 
-try {
-    // Parse JSON responses
-    const rubric = await rubricResponse.json();
-    const dataset = await datasetResponse.json();
+        // Parse JSON responses
+        const rubric = await rubricResponse.json();
+        const dataset = await datasetResponse.json();
 
-    console.log('Rubric:', rubric);
-    console.log('Dataset:', dataset);
+        // Log fetched data
+        console.log('Rubric:', rubric);
+        console.log('Dataset:', dataset);
 
+        // Call function to process data
+        processData(rubric, dataset);
+    } catch (error) {
+        console.error('Error fetching or parsing data:', error);
+    }
+}
+
+// Function to process data
+function processData(rubric, dataset) {
     // Sample dataset row (replace this with actual dataset)
     const sampleDatasetRow = {
         courage_score: 'Proficient',
@@ -23,7 +35,7 @@ try {
     // Sample user input
     const sampleJournalEntry = "I had a positive day today. Overcame challenges and prioritized needs over wants.";
 
-    // Calculate scores
+    // Function to calculate scores
     function calculateScores(entry, virtues, datasetRow) {
         const scores = {
             holistic: datasetRow.holistic_score,
@@ -84,7 +96,7 @@ try {
     }
 
     // Function to be called when the Submit button is clicked
-    function submitJournal() {
+    window.submitJournal = function() {
         // Get user input
         const journalEntry = document.getElementById('journalEntry').value;
         const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
@@ -104,7 +116,7 @@ try {
             scoreDisplay.innerHTML += `<p>${virtue}: ${scores[virtue]}</p>`;
         }
     }
-
-} catch (error) {
-    console.error('Error fetching or parsing data:', error);
 }
+
+// Call fetchData function to start fetching and processing data
+fetchData();
