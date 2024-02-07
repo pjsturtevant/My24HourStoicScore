@@ -2,22 +2,34 @@
 async function calculateScores(entry, virtues, dataset) {
     let scores = {};
 
-    // Find the dataset row that matches the entry
-    const matchingRow = dataset.find(row => row.journal_entry === entry);
+    // Find the closest matching row in the dataset based on some criteria
+    const closestMatch = findClosestMatch(entry, dataset);
 
-    if (matchingRow) {
+    if (closestMatch) {
         // Calculate holistic score
-        scores.holistic = matchingRow.holistic_score;
+        scores.holistic = closestMatch.holistic_score;
 
         // Calculate scores for each virtue
         virtues.forEach(virtue => {
-            scores[virtue] = matchingRow[`${virtue.toLowerCase()}_score`];
+            scores[virtue] = closestMatch[`${virtue.toLowerCase()}_score`];
         });
     } else {
-        console.error('Entry not found in dataset');
+        console.error('No matching entry found in dataset. Using default scores.');
+        // Set default scores here...
+        // For simplicity, setting all scores to a default value of 1 (Minimal)
+        virtues.forEach(virtue => {
+            scores[virtue] = 1;
+        });
     }
 
     return scores;
+}
+
+// Function to find the closest matching entry in the dataset
+function findClosestMatch(entry, dataset) {
+    // Placeholder implementation for demonstration purposes
+    // In a real-world scenario, you would implement a more sophisticated matching algorithm
+    return dataset.find(row => row.journal_entry.toLowerCase() === entry.toLowerCase());
 }
 
 // Function to display scores
@@ -45,3 +57,4 @@ async function submitJournal() {
     // Display scores
     displayScores(scores);
 }
+
