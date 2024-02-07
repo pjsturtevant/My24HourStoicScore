@@ -1,29 +1,23 @@
 // Function to calculate scores
-function calculateScores(entry, virtues, datasetRow) {
-    // Initialize scores
-    const scores = {
-        holistic: datasetRow.holistic_score,
-    };
+async function calculateScores(entry, virtues, dataset) {
+    let scores = {};
 
-    // Iterate over virtues
-    virtues.forEach(virtue => {
-        const scoreDescription = datasetRow[`${virtue.toLowerCase()}_score`];
-        const rubricMapping = getRubricMapping(virtue);
+    // Find the dataset row that matches the entry
+    const matchingRow = dataset.find(row => row.journal_entry === entry);
 
-        scores[virtue] = mapScore(scoreDescription, rubricMapping, entry, datasetRow);
-    });
+    if (matchingRow) {
+        // Calculate holistic score
+        scores.holistic = matchingRow.holistic_score;
+
+        // Calculate scores for each virtue
+        virtues.forEach(virtue => {
+            scores[virtue] = matchingRow[`${virtue.toLowerCase()}_score`];
+        });
+    } else {
+        console.error('Entry not found in dataset');
+    }
 
     return scores;
-}
-
-// Function to map score based on rubric description
-function mapScore(description, rubricMapping, entry, datasetRow) {
-    // Your code for mapping scores goes here...
-}
-
-// Function to retrieve rubric mapping based on virtue
-function getRubricMapping(virtue) {
-    // Your code for getting rubric mapping goes here...
 }
 
 // Function to display scores
@@ -36,23 +30,17 @@ function displayScores(scores) {
 }
 
 // Function to be called when the Submit button is clicked
-function submitJournal() {
+async function submitJournal() {
     // Get user input
     const journalEntry = document.getElementById('journalEntry').value;
     const selectedVirtues = Array.from(document.getElementById('virtues').selectedOptions).map(option => option.value);
 
-    // Sample dataset row (replace this with actual dataset)
-    const sampleDatasetRow = {
-        courage_score: 'Proficient',
-        wisdom_score: 'Developing',
-        justice_score: 'Limited',
-        temperance_score: 'Exemplary',
-        holistic_score: 3.5,
-        feedback: 'Some feedback here',
-    };
+    // Fetch and parse the dataset
+    const datasetResponse = await fetch('https://raw.githubusercontent.com/pjsturtevant/My24HourStoicScore/main/data/newstoictokenized_dataset.json');
+    const dataset = await datasetResponse.json();
 
     // Calculate scores
-    const scores = calculateScores(journalEntry, selectedVirtues, sampleDatasetRow);
+    const scores = await calculateScores(journalEntry, selectedVirtues, dataset);
 
     // Display scores
     displayScores(scores);
