@@ -27,9 +27,17 @@ async function calculateScores(entry, virtues, dataset) {
 
 // Function to find the closest matching entry in the dataset
 function findClosestMatch(entry, dataset) {
+    // Check if dataset is empty or not provided
+    if (!Array.isArray(dataset) || dataset.length === 0) {
+        console.error('Dataset is empty or not provided.');
+        return null;
+    }
+
     // Placeholder implementation for demonstration purposes
     // In a real-world scenario, you would implement a more sophisticated matching algorithm
-    return dataset.find(row => row.journal_entry.toLowerCase() === entry.toLowerCase());
+    const closestMatch = dataset.find(row => row && row.journal_entry && row.journal_entry.toLowerCase() === entry.toLowerCase());
+
+    return closestMatch || null;
 }
 
 // Function to display scores
@@ -57,4 +65,3 @@ async function submitJournal() {
     // Display scores
     displayScores(scores);
 }
-
